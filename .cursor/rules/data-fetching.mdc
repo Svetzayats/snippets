@@ -1,0 +1,50 @@
+---
+description: Use this when implementing or refactoring data fetching logic for the react components inside the osm-ui-react package
+globs: 
+alwaysApply: false
+---
+# Data Fetching 
+
+For fetching data we use library '@tanstack/react-query'.
+
+React Query hooks live in src/shared/query-hooks/ directory. 
+
+## Best practices 
+- Never fetch data directly inside React components
+- Always use custom hooks from the query-hooks directory
+
+### Query Key Structure
+Query keys should reflect the API endpoint path structure. For example:
+- Endpoint: `/reservation/statistics/${id}?date=${urlDate}`
+- Query Key: `['reservation', 'statistics', 'date', unitId, date]`
+
+## Example 
+
+Component.tsx 
+```tsx
+import { useGetOffice } from 'shared/query-hooks/useUnitsApi';
+
+export default function Component({id}: Props) {
+    const { data: officeData, isLoading } = useGetOffice(id);
+    
+    if (isLoading) {
+        return (
+            <div>Loading...</div>
+        );
+    }
+    return (
+        <div>{officeData?.id}</div>
+    );
+}
+```
+shared/query-hooks/useUnitsApi.tsx 
+```tsx
+export function useGetOffice(officeId: string, props: Partial<QueryHookProps> = {}) {
+  return useQuery({
+    queryKey: ['v1', 'unit', 'offices', officeId],
+    queryFn: () => fetch(`units/v1/offices/${officeId}`),
+    staleTime: DAY_CACHE_STALE_TIME,
+    ...props,
+  });
+}
+```
