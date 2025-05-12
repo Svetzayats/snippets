@@ -1,0 +1,22 @@
+/* Use this for overlapping components 
+- for tailwind: add 'grid' to the container, and 'col-start-1 row-start-1' to the chilren
+*/
+.container {
+    display: grid;
+
+    & > * {
+        grid-area: 1 / 1;
+    }
+}
+
+.component {
+    /* for positioning the component in the center and in right */
+    place-content: center end;
+    position: relative;
+}
+
+.component {
+    /* for positioning the component */
+    inset: 20px;
+}
+
