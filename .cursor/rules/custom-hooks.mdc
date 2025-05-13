@@ -1,0 +1,19 @@
+---
+description: Use when creating react component 
+globs: 
+alwaysApply: false
+---
+# Custom Hook 
+
+This rule outlines the guidelines for creating custom React hooks within this project.
+
+## Custom Hooks
+
+- **Purpose:** Encapsulate reusable stateful logic, especially for data fetching or complex UI interactions.
+- **Location:** Place custom hooks in the same directory that component. For example: you create Component.tsx in src/components. Custom hooks for this components should be also placed in src/components. 
+- **Naming:** Use the `use` prefix (e.g., `useAccounts.ts`).
+- **Data Fetching:** For fetching data from API endpoints, prefer using `useQuery`. Follow the guidelines outlined in [data-fetching.mdc](mdc:.cursor/rules/data-fetching.mdc).
+-   Create dedicated hooks for specific data types (e.g., `useAccounts`, `useLabels`).
+- **Simplicity:** Keep hooks focused on a single responsibility.
+- **Testing:** Add tests for hook using renderHook
+`import {renderHook} from '@testing-library/react'`. 
