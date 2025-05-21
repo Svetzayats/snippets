@@ -1,0 +1,20 @@
+---
+description: 
+globs: *.tsx,*.jsx
+alwaysApply: false
+---
+# React useEffect Best Practices
+
+`useEffect` should be used as a last resort when there are no other options available. Review carefully when you see useEffect in a component. 
+
+## When to use useEffect 
+- fetching data, if special libraries like react query are not utilized (need to implement cleanup to avoid race conditions)
+- synchronize with external system 
+- if something caused the user seeing the component - it might be in Effect. For example, the analytics POST request  
+
+## When no to use useEffect 
+- to transform data for rendering: when something can be calculated - it shouldn't be put in state. Calculate it during rendering 
+- reset state when a prop changes: use key for telling React to treat components with different as different components that should not share any state 
+- adjusting some state when a prop changes: one solution - storing information from previous render and updating the state while rendering (but side effects like changing the DOM or setting timeouts should stay in even handlers or Effects) 
+- handle user events: if something caused by a particular interaction - it should be in the event handler 
+- for subscribing to an external store - use useSyncExternalStore for it 
